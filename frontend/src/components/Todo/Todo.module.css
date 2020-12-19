@@ -1,0 +1,59 @@
+.row {
+  display: grid;
+  grid-template-columns: 35px 1fr 35px;
+  height: 50px;
+  background-color: white;
+  align-items: center;
+  border-bottom: 1px solid grey;
+}
+
+.circle {
+  height: 20px;
+  width: 20px;
+  background-color: rgb(212, 209, 209);
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+  text-align: center;
+}
+
+.circle:hover {
+  border: 2px solid purple;
+}
+
+.text {
+  justify-self: start;
+  width: 100%;
+}
+
+.delete {
+  background: url('../../images/icon-cross.svg');
+  background-repeat: no-repeat;
+}
+
+.row .delete {
+  display: none;
+}
+
+.row:hover .delete {
+  display: block;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.circleCompleted {
+  background-color: #f8ceec;
+  background-image: linear-gradient(315deg, #f8ceec 0%, #a88beb 74%);
+}
+
+.check{
+    color: white;
+    font-size: small;
+}
+
+.selected{
+  color: blue
+}
+

@@ -1,0 +1,40 @@
+.light {
+  background-image: url('../../images/bg-desktop-light.jpg');
+}
+
+.dark {
+  background-image: url('../../images/bg-mobile-dark.jpg');
+}
+
+.navigation {
+  text-align: right;
+  background-repeat: no-repeat;
+  max-width: 1440px;
+  margin: auto;
+  height: 250px;
+}
+
+li {
+  display: inline-block;
+  display: left;
+  margin-right: 1rem;
+}
+
+.links {
+  justify-self: end;
+  padding-top: 1rem;
+  position: absolute;
+  right: 0;
+}
+
+li > a {
+  text-decoration: none;
+  font-size: larger;
+  color: white;
+}
+
+li > p{
+  text-decoration: none;
+  font-size: larger;
+  color: white;
+}
