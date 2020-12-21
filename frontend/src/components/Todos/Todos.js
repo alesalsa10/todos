@@ -127,6 +127,28 @@ export default function Todos() {
     }
   };
 
+  const clearCompleted = async e => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/todos/delete/completed`,
+        {
+          method: 'DELETE',
+          headers: {
+            'x-auth-token': auth.token.token,
+          },
+        }
+      );
+      const responseData = await response.json();
+      setTrigger(!trigger);
+      if (!response.ok) {
+        throw new Error(responseData.errors[0].msg.toString());
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     const sendRequest = async (token) => {
       const res = await fetch('http://localhost:5000/api/todos', {
@@ -218,7 +240,7 @@ export default function Todos() {
                 >
                   Completed
                 </div>
-                <div className={styled.clearCompleted}>Clear Completed</div>
+                <div className={styled.clearCompleted} onClick={clearCompleted} >Clear Completed</div>
               </div>
             </div>
           </div>

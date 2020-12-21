@@ -4,8 +4,6 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const User = require('../../models/User');
 const Todo = require('../../models/Todo');
-const { findOne } = require('../../models/User');
-//const { Mongoose } = require('mongoose');
 
 //POST api/todos/new
 //create todo
@@ -47,7 +45,7 @@ router.get('/', auth, async (req, res) => {
     const userTodos = await User.findById(req.user.id)
       .select('-password')
       .lean()
-      .populate('todos', ['content', 'completed'])
+      .populate('todos', ['content', 'completed']);
 
     if (!userTodos) {
       return res.status(400).send('Server error');
@@ -74,19 +72,41 @@ router.delete('/:id', auth, async (req, res) => {
     if (todo === null) {
       return res.status(404).json({ msg: 'Cannot delete todo' });
     }
-
     //check user
     if (todo.creator.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
     await todo.remove();
-    res.json({ msg: 'todo removed' });
+    res.json({ msg: 'Todo removed' });
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Todo not found' });
     }
     return res.status(500).send('Server error');
+  }
+});
+
+//delte all completed todos
+router.delete('/delete/completed', auth, async (req, res) => {
+  try {
+    const todos = await User.findById(req.user.id);
+
+    todos.todos.map(async (todoId) => {
+      try {
+        let todo = await Todo.findById(todoId);
+        if (todo.completed) {
+          todo.remove();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    return res.json({ msg: 'All completed removed' });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(404).json({ msg: 'Something went wrong, try again' });
   }
 });
 
@@ -125,19 +145,6 @@ router.put(
 //mark todo as completed
 router.put('/complete/:id', auth, async (req, res) => {
   try {
-    /* await Todo.findByIdAndUpdate(
-      req.params.id,
-      { completed: !Todo.completed  },
-      {new: true},
-      function (err, result) {
-        if (err) {
-          console.log(err);
-        }
-        Todo.save()
-        console.log(result);
-        res.send(result);
-      }
-    ); */
     await Todo.findOne({ _id: req.params.id }, function (err, todo) {
       todo.completed = !todo.completed;
       todo.save(function (err, updatedTodo) {
