@@ -7,14 +7,23 @@
   border-bottom: 1px solid grey;
 }
 
+.darkRow{
+  background-color: #25273c;
+  color:white
+}
+
 .circle {
   height: 20px;
   width: 20px;
-  background-color: rgb(212, 209, 209);
   border-radius: 50%;
   display: inline-block;
   margin-left: 5px;
   text-align: center;
+  border: 1px solid #d2d3db;
+}
+
+.cirlceDark{
+  background-color: #25273c ;
 }
 
 .circle:hover {

@@ -3,7 +3,7 @@
 }
 
 .dark {
-  background-image: url('../../images/bg-mobile-dark.jpg');
+  background-image: url('../../images/bg-desktop-dark.jpg');
 }
 
 .navigation {
@@ -23,8 +23,7 @@ li {
 .links {
   justify-self: end;
   padding-top: 1rem;
-  position: absolute;
-  right: 0;
+  
 }
 
 li > a {
@@ -37,4 +36,15 @@ li > p{
   text-decoration: none;
   font-size: larger;
   color: white;
+  cursor: pointer;
+}
+
+@media only screeen and (max-width: 450px){
+  .dark{
+    background: url('../../images/bg-mobile-dark.jpg');
+  }
+  .light{
+    background: url('../../images/bg-mobile-light.jpg');
+  }
+
 }

@@ -15,6 +15,7 @@ import { AuthContext } from './context/auth-context';
 
 function App() {
   const [token, setToken] = useState(false);
+  const [theme, setTheme] = useState('light');
 
   const login = useCallback((token) => {
     setToken(token);
@@ -34,13 +35,31 @@ function App() {
     }
   }, [login]);
 
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      setTheme('light');
+      localStorage.setItem('theme', 'dark');
+    }
+  };
+
+  useEffect(() => {
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+      currentTheme === 'light' ? setTheme('dark') : setTheme('light');
+    }
+  }, []);
+
   let routes;
 
   if (token) {
     routes = (
       <Fragment>
-        <Route exact path='/' component={Todos} />
-        <Route exact path='/todos' component={Todos} />
+        <NavBar theme={theme} />
+        <Route exact path='/' render={ ()=> <Todos toggleTheme={toggleTheme} theme={theme} /> } />
+        <Route exact path='/todos' render={ ()=> <Todos toggleTheme={toggleTheme} theme={theme} /> } />
         <Redirect to='/' />
       </Fragment>
     );
@@ -66,7 +85,7 @@ function App() {
     >
       <Router>
         <Fragment>
-          <NavBar />
+          {/* <NavBar theme={theme} /> */}
           <Switch>{routes}</Switch>
         </Fragment>
       </Router>

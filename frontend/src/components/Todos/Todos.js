@@ -3,7 +3,7 @@ import { AuthContext } from '../../context/auth-context';
 import Todo from '../Todo/Todo';
 import styled from './Todos.module.css';
 
-export default function Todos() {
+export default function Todos({ toggleTheme, theme }) {
   const [loadedTodos, setLoadedTodos] = useState([]);
   const auth = useContext(AuthContext);
   const [content, setContent] = useState({
@@ -127,7 +127,7 @@ export default function Todos() {
     }
   };
 
-  const clearCompleted = async e => {
+  const clearCompleted = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(
@@ -147,7 +147,7 @@ export default function Todos() {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   useEffect(() => {
     const sendRequest = async (token) => {
@@ -172,13 +172,22 @@ export default function Todos() {
     sendRequest(auth.token.token);
   }, [trigger, auth.token.token, todosType, todosLeft]); //update whenever content changes
 
-  //new
   return (
-    <div className={styled.mainContainer}>
-      <div className={styled.container}>
+    <div>
+      <div
+        className={`${styled.mainContainer} ${
+          theme === 'dark' ? styled.mainContainerDark : ''
+        } `}
+      ></div>
+      <div className={`${styled.container} `}>
         <div className={styled.header}>
           <div className={styled.title}>TODO</div>
-          <div className={styled.icon}>
+          <div
+            className={`${styled.icon}  ${
+              theme === 'light' ? styled.light : styled.dark
+            } `}
+            onClick={toggleTheme}
+          >
             <div></div>
           </div>
         </div>
@@ -190,6 +199,9 @@ export default function Todos() {
               onChange={handleTodoInput}
               value={content.content}
               name='content'
+              className={`${
+                theme === 'dark' ? styled.darkInput : styled.lightInput
+              }`}
             />
           </form>
         </div>
@@ -198,6 +210,7 @@ export default function Todos() {
             <div className={styled.items}>
               {loadedTodos.map((todo) => (
                 <Todo
+                  theme={theme}
                   key={todo._id}
                   handleDelete={deleteTodo}
                   todoId={todo._id}
@@ -211,7 +224,11 @@ export default function Todos() {
                 />
               ))}
 
-              <div className={styled.footer}>
+              <div
+                className={`${styled.footer} ${
+                  theme === 'dark' ? styled.darkInput : ''
+                } `}
+              >
                 <div className={styled.todosLeft}>{todosLeft} items left</div>
                 <div
                   className={`${todosType === 'All' ? styled.selected : ''} ${
@@ -240,7 +257,9 @@ export default function Todos() {
                 >
                   Completed
                 </div>
-                <div className={styled.clearCompleted} onClick={clearCompleted} >Clear Completed</div>
+                <div className={styled.clearCompleted} onClick={clearCompleted}>
+                  Clear Completed
+                </div>
               </div>
             </div>
           </div>

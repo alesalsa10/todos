@@ -11,6 +11,7 @@ const Todo = ({
   initialOnClickHandler,
   completed,
   toggleTodo,
+  theme,
 }) => {
   const [editMode, setEditingMode] = useState(false);
   const ref = useRef();
@@ -45,15 +46,19 @@ const Todo = ({
     );
   } else {
     return (
-      <div className={styled.row}>
+      <div
+        className={`${styled.row} ${theme === 'dark' ? styled.darkRow : ''} `}
+      >
         <div
           className={`${styled.circle} ${
             completed ? styled.circleCompleted : ''
-          } `}
+          }  ${theme === 'dark' ? styled.circleDark : ''} `}
           id={todoId}
           onClick={toggleTodo}
         >
-          <span  id={todoId} className={styled.check}>{completed ? '✓' : ''}</span>
+          <span id={todoId} className={styled.check}>
+            {completed ? '✓' : ''}
+          </span>
         </div>
         <div
           className={`${styled.text} ${completed ? styled.completed : ''}`}

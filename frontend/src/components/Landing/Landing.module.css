@@ -1,11 +1,8 @@
 .landing{
-    color: white;
     text-align: center;
-    margin-top: -250px;
     background-image: url('../../../src/images/abstract2.jpg');
     background-size: cover;
     height: 100vh;
-    background-attachment:fixed;
 }
 
 button{
