@@ -14,6 +14,7 @@ connectDB();
 app.use(express.json());
 
 //Define Routes
+app.get('/', (req, res) => {res.send('it is working!')})
 app.use('/api/register', require('./routes/api/register'));
 app.use('/api/login', require('./routes/api/auth'));
 app.use('/api/todos', require('./routes/api/todos'));
