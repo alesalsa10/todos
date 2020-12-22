@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'; //racf
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context';
 import styled from './NavBar.module.css';
 

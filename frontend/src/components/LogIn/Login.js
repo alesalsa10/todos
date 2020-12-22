@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context';
 import styled from './Login.module.css';
+import Loader from 'react-loader-spinner';
 
 export default function Login() {
   const auth = useContext(AuthContext);
@@ -10,32 +11,40 @@ export default function Login() {
     password: '',
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { email, password } = formData;
+  let history = useHistory();
 
   const onChangeHandler = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        'https://damp-castle-11411.herokuapp.com/api/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
       const responseData = await response.json(); //token
       if (!response.ok) {
+        setIsLoading(false);
         setError(responseData.errors[0].msg.toString());
         throw new Error(responseData.errors[0].msg.toString());
       }
       auth.login(responseData);
+      history.push('/todos');
     } catch (err) {
       console.error(err);
     }
@@ -43,7 +52,6 @@ export default function Login() {
 
   return (
     <Fragment>
-      {error && <h3 className='error'>{error}</h3>}
       <form onSubmit={onSubmitHandler}>
         <div className={styled.boldLine}></div>
         <div className={styled.container}>
@@ -71,12 +79,22 @@ export default function Login() {
                 ></input>
               </div>
               <div className={styled.spacing}>
-                Not register? <span className={styled.highlight}><Link to='/register'>Register</Link></span>
+                Not registered?{' '}
+                <span className={styled.highlight}>
+                  <Link to='/register'>Register</Link>
+                </span>
               </div>
+              <div className={styled.error}> {error} </div>
               <div>
-                <button className={`${styled.ghostRound} ${styled.fullWidth}`}>
-                  Login
-                </button>
+                {isLoading ? (
+                  <Loader className={styled.loader} type='TailSpin' />
+                ) : (
+                  <button
+                    className={`${styled.ghostRound} ${styled.fullWidth}`}
+                  >
+                    Login
+                  </button>
+                )}
               </div>
             </div>
           </div>

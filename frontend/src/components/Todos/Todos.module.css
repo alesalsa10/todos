@@ -1,16 +1,16 @@
 .icon {
-  content: '';
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
   justify-self: end;
   padding-right: 1.5rem;
+  background-size: cover;
 }
 
-.light{
+.light {
   background: url('../../images/icon-moon.svg');
 }
 
-.dark{  
-  background: url('../../images/icon-sun.svg')
+.dark {
+  background: url('../../images/icon-sun.svg');
 }
 
 .mainContainer {
@@ -20,17 +20,21 @@
   margin: auto;
 }
 
-.mainContainerDark{
+.mainContainerDark {
   background-color: rgb(41, 39, 39);
 }
 
 .container {
   width: 500px;
-  margin: auto; 
-  z-index: 2;
-  margin-top: -120vh;
+  margin: auto;
+  position: absolute;
+  top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
-
 
 .title {
   color: white;
@@ -41,7 +45,7 @@
 .header {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .input {
@@ -66,24 +70,24 @@ input:after {
   border-bottom: 2px solid red;
 }
 
-.darkInput{
+.darkInput {
   background-color: #25273c !important ;
 }
 
-.lightInput::placeholder{
+.lightInput::placeholder {
   color: black;
 }
 
-.items{
+.items {
   box-shadow: 3px 3px 10px;
   border-radius: 5px;
 }
 
-.items:last-child{
+.items:last-child {
   border-bottom: none;
 }
 
-.footer{
+.footer {
   display: grid;
   grid-template-columns: 200px repeat(4, auto);
   height: 50px;
@@ -93,33 +97,36 @@ input:after {
   background-color: white;
 }
 
-.selected{
-  color: blue
+.selected {
+  color: blue;
 }
 
-.buttons{
+.buttons {
   cursor: pointer;
 }
 
-.todosLeft{
+.todosLeft {
   margin-left: 5px;
+  justify-self: left;
 }
 
-.clearCompleted:hover{
+.clearCompleted:hover {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 600px){
-  .container{
+@media only screen and (max-width: 600px) {
+  .container {
     width: 350px;
   }
-  .footer{
+  .footer {
     display: grid;
     grid-template-columns: repeat(5, auto);
     font-size: small;
   }
 }
 
-
-
-
+@media only screen and (max-width: 350px) {
+  .container {
+    width: 300px;
+  }
+}

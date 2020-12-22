@@ -31,8 +31,8 @@
 }
 
 .text {
-  justify-self: start;
   width: 100%;
+  text-align: left;
 }
 
 .delete {

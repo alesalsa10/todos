@@ -85,7 +85,6 @@ function App() {
     >
       <Router>
         <Fragment>
-          {/* <NavBar theme={theme} /> */}
           <Switch>{routes}</Switch>
         </Fragment>
       </Router>

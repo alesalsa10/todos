@@ -36,7 +36,7 @@ export default function Todos({ toggleTheme, theme }) {
   const addTodo = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/todos/new', {
+      const response = await fetch('https://damp-castle-11411.herokuapp.com/api/todos/new', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default function Todos({ toggleTheme, theme }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/todos/${e.target.id}`,
+        `https://damp-castle-11411.herokuapp.com/api/todos/${e.target.id}`,
         {
           method: 'DELETE',
           headers: {
@@ -83,7 +83,7 @@ export default function Todos({ toggleTheme, theme }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/todos/${e.target.id}`,
+        `https://damp-castle-11411.herokuapp.com/api/todos/${e.target.id}`,
         {
           method: 'PUT',
           headers: {
@@ -109,7 +109,7 @@ export default function Todos({ toggleTheme, theme }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/todos/complete/${e.target.id}`,
+        `https://damp-castle-11411.herokuapp.com/api/todos/complete/${e.target.id}`,
         {
           method: 'PUT',
           headers: {
@@ -131,7 +131,7 @@ export default function Todos({ toggleTheme, theme }) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/todos/delete/completed`,
+        `https://damp-castle-11411.herokuapp.com/api/todos/delete/completed`,
         {
           method: 'DELETE',
           headers: {
@@ -151,7 +151,7 @@ export default function Todos({ toggleTheme, theme }) {
 
   useEffect(() => {
     const sendRequest = async (token) => {
-      const res = await fetch('http://localhost:5000/api/todos', {
+      const res = await fetch('https://damp-castle-11411.herokuapp.com/api/todos', {
         headers: {
           'x-auth-token': token,
         },
@@ -188,7 +188,7 @@ export default function Todos({ toggleTheme, theme }) {
             } `}
             onClick={toggleTheme}
           >
-            <div></div>
+            
           </div>
         </div>
         <div className={styled.input}>

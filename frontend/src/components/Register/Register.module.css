@@ -183,6 +183,16 @@ button:focus {
   background-size: cover;
 }
 
+.loader{
+  text-align: center;
+}
+
+.error{
+  color: red;
+  text-align: center;
+  margin-bottom: 10px
+}
+
 @media (max-width: 500px) {
   .window {
     width: 100%;
