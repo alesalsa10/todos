@@ -121,7 +121,7 @@ export const Register = () => {
                 ></input>
               </div>
               <div className={styled.spacing}>
-                Hace an account?{' '}
+                Have an account?{' '}
                 <span className={styled.highlight}>
                   {' '}
                   <Link to='/login'>Login</Link>{' '}
