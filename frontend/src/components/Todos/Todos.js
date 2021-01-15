@@ -198,6 +198,7 @@ export default function Todos({ toggleTheme, theme }) {
               placeholder='Add a new todo'
               onChange={handleTodoInput}
               value={content.content}
+              maxLength='50'
               name='content'
               className={`${
                 theme === 'dark' ? styled.darkInput : styled.lightInput
@@ -229,7 +230,7 @@ export default function Todos({ toggleTheme, theme }) {
                   theme === 'dark' ? styled.darkInput : ''
                 } `}
               >
-                <div className={styled.todosLeft}>{todosLeft} items left</div>
+                <div className={styled.todosLeft}>{todosLeft} item(s) left</div>
                 <div
                   className={`${todosType === 'All' ? styled.selected : ''} ${
                     styled.buttons

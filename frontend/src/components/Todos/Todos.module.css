@@ -73,6 +73,11 @@ input:after {
 
 .darkInput {
   background-color: #25273c !important ;
+  color: white;
+}
+
+.lightInput{
+  color: black;
 }
 
 .lightInput::placeholder {

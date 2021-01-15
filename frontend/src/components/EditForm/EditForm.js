@@ -26,6 +26,7 @@ const EditForm = (props, ref) => {
         name='content'
         type='text'
         autoFocus
+        maxLength='50'
         onChange={onChangeHandler}
         value={inputValue}
       />
