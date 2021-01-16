@@ -3,6 +3,10 @@ import { AuthContext } from '../../context/auth-context';
 import Todo from '../Todo/Todo';
 import styled from './Todos.module.css';
 
+import autosize from 'autosize';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 export default function Todos({ toggleTheme, theme }) {
   const [loadedTodos, setLoadedTodos] = useState([]);
   const auth = useContext(AuthContext);
@@ -14,11 +18,14 @@ export default function Todos({ toggleTheme, theme }) {
   const [todosType, setTodosType] = useState('All');
   const [todosLeft, setTodosLeft] = useState(0);
 
+  const [startDate, setStartDate] = useState(new Date());
+
   const handleTodosTypeClick = (e) => {
     setTodosType(e.target.id);
   };
 
   const handleTodoInput = (e) => {
+    e.preventDefault()
     setContent({ ...content, [e.target.name]: e.target.value });
   };
 
@@ -36,16 +43,19 @@ export default function Todos({ toggleTheme, theme }) {
   const addTodo = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://damp-castle-11411.herokuapp.com/api/todos/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': auth.token.token,
-        },
-        body: JSON.stringify({
-          content: content.content,
-        }),
-      });
+      const response = await fetch(
+        'https://damp-castle-11411.herokuapp.com/api/todos/new',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': auth.token.token,
+          },
+          body: JSON.stringify({
+            content: content.content,
+          }),
+        }
+      );
       const responseData = await response.json();
       setTrigger(!trigger);
       setContent({ content: '' });
@@ -149,13 +159,25 @@ export default function Todos({ toggleTheme, theme }) {
     }
   };
 
+  const detectEnterKey = e => {
+    if (e.key === 'Enter'){
+      e.preventDefault()
+      addTodo(e);
+    }
+  }
+
+  autosize(document.querySelectorAll('textarea'));
+
   useEffect(() => {
     const sendRequest = async (token) => {
-      const res = await fetch('https://damp-castle-11411.herokuapp.com/api/todos', {
-        headers: {
-          'x-auth-token': token,
-        },
-      });
+      const res = await fetch(
+        'https://damp-castle-11411.herokuapp.com/api/todos',
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
 
       const resData = await res.json();
 
@@ -187,23 +209,27 @@ export default function Todos({ toggleTheme, theme }) {
               theme === 'light' ? styled.light : styled.dark
             } `}
             onClick={toggleTheme}
-          >
-            
-          </div>
+          ></div>
         </div>
         <div className={styled.input}>
           <form onSubmit={addTodo}>
-            <input
-              type='text'
-              placeholder='Add a new todo'
-              onChange={handleTodoInput}
-              value={content.content}
-              maxLength='50'
+
+            <textarea
+              onKeyDown={detectEnterKey}
               name='content'
+              onChange={handleTodoInput}
+              placeholder='Add a new todo'
               className={`${
                 theme === 'dark' ? styled.darkInput : styled.lightInput
               }`}
-            />
+              value={content.content}
+              id='addTodo'
+            ></textarea>
+            {/* <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              minDate={startDate}
+            /> */}
           </form>
         </div>
         {loadedTodos !== undefined ? (
@@ -217,11 +243,14 @@ export default function Todos({ toggleTheme, theme }) {
                   todoId={todo._id}
                   todoContent={todo.content}
                   completed={todo.completed}
+
                   onSubmitHandler={updateTodo}
+
                   onChangeHandler={handleTodoUpdate}
                   inputValue={updatedContent.content}
                   initialOnClickHandler={handleTodoClick}
                   toggleTodo={toggleTodo}
+                  //detectEnterKey={detectEnterKey}
                 />
               ))}
 

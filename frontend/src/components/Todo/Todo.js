@@ -5,7 +5,7 @@ const Todo = ({
   handleDelete,
   todoId,
   todoContent,
-  onSubmitHandler,
+  onSubmitHandler, //update todos
   onChangeHandler,
   inputValue, //this should be the value of the clicked element initially
   initialOnClickHandler,
@@ -28,8 +28,11 @@ const Todo = ({
   };
 
   const handleSubmit = (e) => {
-    setEditingMode(false);
-    onSubmitHandler(e);
+    if (e.target.className.includes('EditTextArea') && e.key === 'Enter') {
+      e.preventDefault();
+      setEditingMode(false);
+      onSubmitHandler(e);
+    }
   };
 
   if (editMode) {
@@ -42,6 +45,7 @@ const Todo = ({
         todoId={todoId}
         onChangeHandler={onChangeHandler}
         handleClickOutside={handleClickOutside}
+        theme={theme}
       />
     );
   } else {

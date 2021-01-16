@@ -1,5 +1,19 @@
 .editForm{
-    height: 50px;
+    height: auto;
     padding: 0;
     margin: 0;
+}
+
+.EditTextArea{
+    margin: 0;
+}
+
+.dark{
+    color: white;
+    background-color: #25273c;
+}
+
+.light{
+    color: black;
+    background-color: white;
 }

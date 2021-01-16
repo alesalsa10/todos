@@ -6,8 +6,9 @@ const EditForm = (props, ref) => {
     onChangeHandler,
     inputValue,
     todoId,
-    onSubmitHandler,
     handleClickOutside,
+    onSubmitHandler,
+    theme
   } = props;
 
   useEffect(() => {
@@ -19,17 +20,26 @@ const EditForm = (props, ref) => {
     };
   }, [handleClickOutside]);
 
+  const handleFocus = e => {
+    let val = e.target.value;
+    e.target.value = '';
+    e.target.value = val;
+  }
+
   return (
-    <form onSubmit={onSubmitHandler} id={todoId} className={styled.editForm}>
-      <input
+    <form className={styled.editForm}>
+      <textarea
         ref={ref}
         name='content'
-        type='text'
-        autoFocus
-        maxLength='50'
+        onFocus={handleFocus}
+        className={`${styled.EditTextArea}  ${theme === 'dark' ? styled.dark: styled.light} `}
         onChange={onChangeHandler}
         value={inputValue}
-      />
+        id={`${todoId} `}
+        onKeyDown={onSubmitHandler}
+        autoFocus
+      >
+        </textarea>
     </form>
   );
 };
